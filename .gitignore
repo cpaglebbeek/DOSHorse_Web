@@ -1,0 +1,11 @@
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+build/
+dist/
+node_modules/
+*.wasm
+*.wasm.map
+emsdk/
