@@ -1,8 +1,8 @@
 # CHANGELOG — DOSHorse_Web
 
-## v0.0.3-Sutherland — 2026-06-01 (PENDING WASM VERIFICATION)
+## v0.0.3-Sutherland — 2026-06-01 ✅ VERIFIED
 
-> **Status:** Code-pad voorbereid + Core hotfix-bump opgenomen. WASM-build draait in background (task `byw4tnpc5`) tijdens OEU. Verificatie van resulterende `dist/doshorse-x{.js,.wasm}` artefacten + smoke-run volgt in volgende sessie. Eerste build attempt #1 (~12 min) faalde op `np2glue.h:40 byteorder` — fix in DOSHorse_Core@66927f6 v0.0.5-Roberts patches/0002. Attempt #2 met fix loopt.
+> **Status:** Verificatie compleet **na OEU** door auto-task `byw4tnpc5` (build attempt #2 met DOSHorse_Core@66927f6 v0.0.5-Roberts CFLAGS-hotfix). Smoke-test #4 toont DOSHorse-banner in WASM `--version` output via Node.js. Artefacten: `dist/doshorse-x.js` 212K + `dist/doshorse-x.wasm` 16M.
 
 Sub-step 3 van Emscripten-pad — echte dosbox-x WASM-build via upstream's `build-emscripten-sdl2` script + branding-patch toegepast op WASM-binary.
 
@@ -28,12 +28,29 @@ Upstream `build-emscripten-sdl2` was getest tegen Emscripten 3.1.28. Wij gebruik
 ### Codenaam-rationale
 **Sutherland** = Ivan Sutherland (Sketchpad, 1963) — **eerste interactieve computer-graphics**, gold standard voor "rendering inside a window". Past bij DOSHorse_Web's **eerste echte dosbox-x WASM-build**: we tonen DOS-graphics rendering in een browser-canvas — directe descendant van Sutherland's Sketchpad-interactiviteit.
 
+### Bewezen lokaal (smoke-test #4, post-OEU)
+```
+$ make wasm-install
+✓ Installed JS: dist/doshorse-x.js (212K)
+✓ Installed WASM: dist/doshorse-x.wasm (16M)
+
+$ ln -sf doshorse-x.wasm dist/dosbox-x.wasm   # alias voor hardcoded JS-loader-pad
+$ source tools/emscripten-env.sh && node dist/doshorse-x.js --version
+DOSHorse version 0.0.3-Canion (forked from upstream below)
+DOSBox-X version 2026.05.02 SDL2, copyright 2011-2026 The DOSBox-X Team.
+```
+
+### Known drift (v0.0.4 follow-up)
+- **Branding-string-mismatch**: patch 0001 hardcoded `0.0.3-Canion` (van toen Core Canion was). Bij Core/Web version-bumps moet patch 0001 mee-updated. Fix-route: build-time substitution via Makefile, of patch-template. v0.0.4 polish.
+- **WASM-loader filename**: JS-loader hardcoded `dosbox-x.wasm`-zoekpad. Tijdelijk via symlink in `dist/`; structureel: patches voor `Module.locateFile` of build-script-flag.
+
 ### Niet uitgevoerd (sub-step 4+ in v0.0.4)
 - JS/HTML frontend (Quick mode: drag-and-drop .exe/.img / Full mode: ROM-library + settings) — beslispunt W2
 - IndexedDB save-states (P-DSH-04)
 - Web Audio + Canvas/WebGL bindings
 - Touch-overlay voor mobile browsers
 - Linking met `libdoshorse_core.a` (Core's Public API stub-impl) → dosbox-x' internal state
+- Branding-patch dynamic versioning (zie Known drift hierboven)
 
 ## v0.0.2-Allen — 2026-06-01
 
