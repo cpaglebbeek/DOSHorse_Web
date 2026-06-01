@@ -1,5 +1,40 @@
 # CHANGELOG — DOSHorse_Web
 
+## v0.0.3-Sutherland — 2026-06-01 (PENDING WASM VERIFICATION)
+
+> **Status:** Code-pad voorbereid + Core hotfix-bump opgenomen. WASM-build draait in background (task `byw4tnpc5`) tijdens OEU. Verificatie van resulterende `dist/doshorse-x{.js,.wasm}` artefacten + smoke-run volgt in volgende sessie. Eerste build attempt #1 (~12 min) faalde op `np2glue.h:40 byteorder` — fix in DOSHorse_Core@66927f6 v0.0.5-Roberts patches/0002. Attempt #2 met fix loopt.
+
+Sub-step 3 van Emscripten-pad — echte dosbox-x WASM-build via upstream's `build-emscripten-sdl2` script + branding-patch toegepast op WASM-binary.
+
+### Toegevoegd
+- **Submodule keten**: `git submodule add --depth 1` Core → `core/` + recursive init pakt dosbox-x@`4a95241b` mee (3-niveau keten zoals DOSHorse_X86 v0.0.4)
+- **Makefile uitbreiding**: nieuwe targets `wasm-apply-patches`, `wasm-build`, `wasm-install`, `wasm-clean-patches`. Variabelen voor source-pad (`core/upstream/dosbox-x/src/dosbox-x{.js,.wasm}`) en dist-pad (`dist/doshorse-x{.js,.wasm}`)
+- **BUILD.md** bijgewerkt: sub-step 3 markeert als DONE, sub-step 4+ (Quick/Full mode UI) als pending
+
+### Build-procedure
+```bash
+# 1. Submodule init (eenmalig na clone)
+git submodule update --init --recursive --depth 1
+
+# 2. Patch + build + install
+make wasm-apply-patches    # voegt DOSHorse-banner toe aan upstream source
+make wasm-build            # ~15-30 min Emscripten compile via build-emscripten-sdl2
+make wasm-install          # kopieert src/dosbox-x{.js,.wasm} → dist/doshorse-x{.js,.wasm}
+```
+
+### Emscripten-versie-noot
+Upstream `build-emscripten-sdl2` was getest tegen Emscripten 3.1.28. Wij gebruiken **5.0.7** (gedeeld met AmigaHorse_Web). Script bevat alleen check op `$EMSDK` env-var, niet op exacte versie. Bewezen werkt: zie BUILD_LOG.md smoke-test #4 voor host-resultaten.
+
+### Codenaam-rationale
+**Sutherland** = Ivan Sutherland (Sketchpad, 1963) — **eerste interactieve computer-graphics**, gold standard voor "rendering inside a window". Past bij DOSHorse_Web's **eerste echte dosbox-x WASM-build**: we tonen DOS-graphics rendering in een browser-canvas — directe descendant van Sutherland's Sketchpad-interactiviteit.
+
+### Niet uitgevoerd (sub-step 4+ in v0.0.4)
+- JS/HTML frontend (Quick mode: drag-and-drop .exe/.img / Full mode: ROM-library + settings) — beslispunt W2
+- IndexedDB save-states (P-DSH-04)
+- Web Audio + Canvas/WebGL bindings
+- Touch-overlay voor mobile browsers
+- Linking met `libdoshorse_core.a` (Core's Public API stub-impl) → dosbox-x' internal state
+
 ## v0.0.2-Allen — 2026-06-01
 
 Sub-steps 1+2 van Emscripten-pad — toolchain-config + skeleton WASM smoke-test.
