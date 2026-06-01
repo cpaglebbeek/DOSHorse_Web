@@ -6,6 +6,7 @@
 build/
 dist/
 node_modules/
-*.wasm
 *.wasm.map
 emsdk/
+# WASM artefacts in build/ zijn al uitgesloten via build/; geen *.wasm wildcard
+# om eventuele future-vendored WASM-fixtures niet per ongeluk uit te sluiten.
