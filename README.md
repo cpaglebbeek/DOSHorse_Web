@@ -43,4 +43,4 @@ Analoog aan AmigaHorse_Web:
 
 ## Deploy
 
-`horsecloud55.ddns.net/DOSHorse/` (statisch). Geen Hostinger.
+`icthorsecloud.nl/DOSHorse/` (statisch). Geen Hostinger.

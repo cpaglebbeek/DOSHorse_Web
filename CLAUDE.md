@@ -14,5 +14,5 @@ v0.0.1 = Faggin. Pool: `Meta_DOSHorse/CLAUDE.md`.
 
 - WASM-binary NIET committen — alleen bron + build-scripts.
 - Bestanden onder `dist/` zijn build-output (gitignore).
-- Deploy via rsync naar `horsecloud55.ddns.net/DOSHorse/web/` (script in `deploy/`).
+- Deploy via rsync naar `icthorsecloud.nl/DOSHorse/web/` (script in `deploy/`).
 - Geen Hostinger/icthorse.nl voor deze variant (afwijking van standaard, bewust gekozen in newp beslispunt 5).
